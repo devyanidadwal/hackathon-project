@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>FEATURE</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(90deg, #dff6f0, #ffffff);
+            color: #222;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: linear-gradient(90deg, #dff6f0, #ffffff);
+            ;
+            color: #fff;
+        }
+
+        .navbar a {
+            color: #242323;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            font: "Times New Roman", Times, serif;
+        }
+
+        .navbar .user-icon {
+            font-size: 18px;
+        }
+
+        /* Feature Section */
+        .feature {
+            text-align: center;
+            padding: 40px 20px 20px;
+        }
+
+        .feature h1,
+        .feature h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+            color: #06135b;
+        }
+
+        .feature p {
+            font-size: 16px;
+            color: #1a1515;
+            max-width: 1000px;
+            margin: 0 auto;
+            font: Poppins, sans-serif;
+        }
+
+        .feature p.a {
+            font-size: 15px;
+            color: #1a1515;
+            max-width: 800px;
+            margin: 20px auto 0;
+            font-weight: 500;
+        }
+
+
+        /* Input box */
+        .input-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px auto;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-box label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .input-box button {
+            width: 100%;
+            padding: 12px;
+            background: #2f7cff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .input-box button:hover {
+            background: #1e5edc;
+        }
+
+        /* Result Area */
+        .result {
+            display: none;
+            background: #fff;
+            padding: 25px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .result h2 {
+            margin-bottom: 15px;
+            color: #20488b;
+        }
+
+        .result p {
+            margin: 8px 0;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        .result .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .result .buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .result .buttons .next {
+            background: #093d34;
+            color: #fff;
+        }
+
+        .result .buttons .back {
+            background: #093d34;
+            color: #fff;
+        }
+
+        .result .buttons .next:hover {
+            background: #20a385;
+        }
+
+        .result .buttons .back:hover {
+            background: #20a385;
+        }
+    </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="feature.html">⬅ Back</a>
+    <div class="user-icon">👤</div>
+  </nav>
+
+  <!-- Feature Section -->
+  <section class="feature">
+    <h1>ROOFTOP HARVESTING COST ESTIMATION 💰</h1>
+    <p>Enter your harvesting type and location to get an estimated cost and available government schemes.</p>
+  </section>
+
+  <!-- Input Box -->
+  <div class="input-box">
+    <form id="costForm">
+      <label for="type">Harvesting Type (storage/recharge)</label>
+      <input type="text" id="type" required>
+
+      <label for="location">Location</label>
+      <input type="text" id="location" required>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Result Area -->
+  <div class="result" id="result">
+    <h2>Result</h2>
+    <p><strong>Estimated Cost:</strong> <span id="cost"></span></p>
+    <p><strong>Government Schemes:</strong></p>
+    <ul id="schemes"></ul>
+
+    <div class="buttons">
+      <button class="next" onclick="window.location.href='feature3.html'">Go to Next Feature</button>
+      <button class="back" onclick="window.location.href='feature1.html'">Back</button>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('costForm');
+    const resultBox = document.getElementById('result');
+    const costSpan = document.getElementById('cost');
+    const schemesList = document.getElementById('schemes');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const payload = {
+        type: document.getElementById('type').value,
+        location: document.getElementById('location').value
+      };
+
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/cost", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        costSpan.textContent = data.estimate;
+        schemesList.innerHTML = "";
+        data.schemes.forEach(s => {
+          const li = document.createElement("li");
+          li.textContent = s;
+          schemesList.appendChild(li);
+        });
+
+        resultBox.style.display = "block";
+        resultBox.scrollIntoView({ behavior: "smooth" });
+
+      } catch (err) {
+        console.error(err);
+        resultBox.innerHTML = `<p style="color:red;">Error connecting to server</p>`;
+        resultBox.style.display = "block";
+        resultBox.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  </script>
+
+</body>
+
+
+</html>
+
+
+
+

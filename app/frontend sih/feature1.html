@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="feature.html" rel="stylesheet">
+
+  <title>FEATURE</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(90deg, #8fc7fb, #ffffff);
+      ;
+      color: #222;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: linear-gradient(90deg, #8fc7fb, #ffffff);
+      ;
+      color: #fff;
+    }
+
+    .navbar a {
+      color: #242323;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      font: "Times New Roman", Times, serif;
+    }
+
+    .navbar .user-icon {
+      font-size: 18px;
+    }
+
+    /* Feature Section */
+    .feature {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+
+    .feature h1,
+    .feature h2 {
+      margin-bottom: 10px;
+      font-size: 28px;
+      color: #06135b;
+    }
+
+    .feature p {
+      font-size: 16px;
+      color: #1a1515;
+      max-width: 1000px;
+      margin: 0 auto;
+      font: Poppins, sans-serif;
+    }
+    .feature p.a {
+      font-size: 15px;
+      color: #1a1515;
+      max-width: 800px;
+      margin: 20px auto 0;
+      font-weight: 500;
+    }
+
+
+  /* Input box */
+  .input-box {
+  background: #fff;
+  padding: 25px;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .input-box label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  }
+
+  .input-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  }
+
+  .input-box button {
+  width: 100%;
+  padding: 12px;
+  background: #2f7cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  }
+
+  .input-box button:hover {
+  background: #1e5edc;
+  }
+
+  /* Result Area */
+  .result {
+  display: none;
+  background: #fff;
+  padding: 25px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .result h2 {
+  margin-bottom: 15px;
+  color: #20488b;
+  }
+
+  .result p {
+  margin: 8px 0;
+  }
+
+  pre {
+  background: #f4f4f4;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  overflow-x: auto;
+  }
+
+  .result .buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  }
+
+  .result .buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  }
+
+  .result .buttons .next {
+  background: #093d34;
+  color: #fff;
+  }
+
+  .result .buttons .back {
+  background: #093d34;
+  color: #fff;
+  }
+
+  .result .buttons .next:hover {
+  background: #20a385;
+  }
+
+  .result .buttons .back:hover {
+  background: #20a385;
+  }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="feature.html">⬅ Back</a>
+    <div class="user-icon">👤</div>
+  </nav>
+
+  <!-- Feature Section -->
+  <section class="feature">
+    <h1>IS THE ROOFTOP "WORTH" HARVESTING?🌱</h1>
+    <p>This tool helps you figure out whether your roof is a good candidate for rainwater harvesting.</p>
+    <p class="a">Just pop in details like location, the size of your roof, and open space area. In seconds,
+      you’ll know how much water you could be collecting—because why let all that rain just slip away?</p>
+  </section>
+
+  <!-- Input Box -->
+  <div class="input-box">
+    <form id="featureForm">
+      <label for="name">Name</label>
+      <input type="text" id="name" required>
+
+      <label for="location">Location</label>
+      <input type="text" id="location" required>
+
+      <label for="roof">Roof Area (m²)</label>
+      <input type="number" id="roof" required>
+
+      <label for="open">Open Space (m²)</label>
+      <input type="number" id="open" required>
+
+      <button type="submit">SUBMIT</button>
+    </form>
+  </div>
+
+  <!-- Result Area -->
+  <div class="result" id="resultBox" style="display:none; margin-top: 1em; padding:1em; border:1px solid #ccc; border-radius:10px; background:#f9f9f9;">
+    <h2>Result</h2>
+    <p id="message" style="font-weight:600;"></p>
+
+    <div class="buttons">
+      <button class="next" onclick="window.location.href='feature2.html'">Go to Cost Estimation</button>
+      <button class="back" onclick="window.location.href='previous.html'">Back</button>
+    </div>
+  </div>
+
+  
+  <script>
+  document.getElementById('featureForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const payload = {
+      name: document.getElementById('name').value,
+      location: document.getElementById('location').value,
+      roof_area: parseFloat(document.getElementById('roof').value) || 0,
+      open_space: parseFloat(document.getElementById('open').value) || 0
+    };
+
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/feasibility", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      const msgDiv = document.getElementById('message');
+      msgDiv.innerHTML = "";
+
+      if (data.feasible) {
+        msgDiv.innerHTML = `
+          <p style="color:green; font-weight:bold;">:)) Rooftop is suitable for harvesting</p>
+          <p><strong>Type:</strong> ${data.harvesting_type}</p>
+          <p><strong>Reason:</strong> ${data.reason}</p>
+        `;
+      } else {
+        msgDiv.innerHTML = `
+          <p style="color:red; font-weight:bold;">:(( Rooftop is not suitable</p>
+          <p><strong>Reason:</strong> ${data.reason}</p>
+        `;
+      }
+
+      const resultBox = document.getElementById('resultBox');
+      resultBox.style.display = 'block';
+
+      // ✅ Smooth scroll to result box
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch (err) {
+      console.error("Error:", err);
+      const resultBox = document.getElementById('resultBox');
+      document.getElementById('message').innerHTML = `<span style="color:red;">Error connecting to server</span>`;
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+</script>
+
+</body>
+</html>
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- <script>
+  document.getElementById('featureForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    // Collect inputs
+    const payload = {
+      name: document.getElementById('name').value,
+      location: document.getElementById('location').value,
+      roof_area: parseFloat(document.getElementById('roof').value) || 0,
+      open_space: parseFloat(document.getElementById('open').value) || 0
+    };
+
+    try {
+      // Call FastAPI backend (posts.py)
+      const res = await fetch("http://127.0.0.1:8000/api/feasibility", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      // Show result
+      const resultBox = document.getElementById('resultBox');
+      let msg = data.message;
+      if (data.harvesting_type) {
+        msg += `\n💧 Recommended: ${data.harvesting_type}`;
+      }
+      if (data.reason) {
+        msg += `\n📌 Reason: ${data.reason}`;
+      }
+      document.getElementById('message').textContent = msg;
+
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: "smooth" });
+
+    } catch (err) {
+      console.error("Error:", err);
+      const resultBox = document.getElementById('resultBox');
+      document.getElementById('message').innerHTML =
+        `<span style="color:red;">Error connecting to server</span>`;
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+</script> -->
+
+
+</body>
+
+
+
+</html>
+
+
+
+
